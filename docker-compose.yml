@@ -1,0 +1,20 @@
+version: "3.7"
+services:
+  rstudio:
+    image: rocker/rstudio:4.0.2
+    command:
+    - /bin/sh
+    - -c
+    - |
+      mkdir -p /home/rstudio/.rstudio/projects_settings \
+      && echo /home/rstudio/myproject/myproject.Rproj \
+        > /home/rstudio/.rstudio/projects_settings/switch-to-project \
+      && chown -R rstudio:rstudio /home/rstudio/.rstudio \
+      && /init
+    ports:
+      - "8787:8787"
+    environment:
+      - PASSWORD=password
+      - DISABLE_AUTH=true
+    volumes:
+      - .:/home/rstudio/myproject
